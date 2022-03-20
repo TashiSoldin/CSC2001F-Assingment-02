@@ -2,8 +2,8 @@
 // 26 March 2017
 // Hussein Suleman
 
-public class BinaryTree<dataType>{
-   BinaryTreeNode<dataType> root;
+public class BinaryTree<Vaccine>{
+   BinaryTreeNode<Vaccine> root;
    
    public BinaryTree (){
       root = null;
@@ -12,7 +12,7 @@ public class BinaryTree<dataType>{
    public int getHeight (){
       return getHeight (root);
    }   
-   public int getHeight ( BinaryTreeNode<dataType> node ){
+   public int getHeight ( BinaryTreeNode<Vaccine> node ){
       if (node == null)
          return -1;
       else
@@ -23,21 +23,21 @@ public class BinaryTree<dataType>{
       return getSize (root);
    } 
 
-   public int getSize ( BinaryTreeNode<dataType> node ){
+   public int getSize ( BinaryTreeNode<Vaccine> node ){
       if (node == null)
          return 0;
       else
          return 1 + getSize (node.getLeft ()) + getSize (node.getRight ());
    }
    
-   public void visit ( BinaryTreeNode<dataType> node ){
+   public void visit ( BinaryTreeNode<Vaccine> node ){
       System.out.println (node.data);
    }
    
    public void preOrder (){
       preOrder (root);
    }
-   public void preOrder ( BinaryTreeNode<dataType> node ){
+   public void preOrder ( BinaryTreeNode<Vaccine> node ){
       if (node != null){
          visit (node);
          preOrder (node.getLeft ());
@@ -49,7 +49,7 @@ public class BinaryTree<dataType>{
       postOrder (root);
    }
 
-   public void postOrder ( BinaryTreeNode<dataType> node ){
+   public void postOrder ( BinaryTreeNode<Vaccine> node ){
       if (node != null){
          postOrder (node.getLeft ());
          postOrder (node.getRight ());
@@ -61,7 +61,7 @@ public class BinaryTree<dataType>{
       inOrder (root);
    }
 
-   public void inOrder ( BinaryTreeNode<dataType> node ){
+   public void inOrder ( BinaryTreeNode<Vaccine> node ){
       if (node != null){
          inOrder (node.getLeft ());
          visit (node);
@@ -72,9 +72,9 @@ public class BinaryTree<dataType>{
    public void levelOrder (){
       if (root == null)
          return;
-      BTQueue<dataType> q = new BTQueue<dataType> ();
+      BTQueue<Vaccine> q = new BTQueue<Vaccine> ();
       q.enQueue (root);
-      BinaryTreeNode<dataType> node;
+      BinaryTreeNode<Vaccine> node;
       while ((node = q.getNext ()) != null){
          visit (node);
          if (node.getLeft () != null)

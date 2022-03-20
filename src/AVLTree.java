@@ -3,23 +3,25 @@
 // Hussein Suleman
 // reference: kukuruku.co/post/avl-trees/
 
-public class AVLTree<dataType extends Comparable<? super dataType>> extends BinaryTree<dataType>{
-   public int height ( BinaryTreeNode<dataType> node ){
+public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends BinaryTree<Vaccine>{
+   public int height ( BinaryTreeNode<Vaccine> node ){
       if (node != null)
          return node.height;
       return -1;
    }
    
-   public int balanceFactor ( BinaryTreeNode<dataType> node ){
+   // Caclulating the Balance Factor 
+   public int balanceFactor ( BinaryTreeNode<Vaccine> node ){
       return height (node.right) - height (node.left);
    }
    
-   public void fixHeight ( BinaryTreeNode<dataType> node ){
+   public void fixHeight ( BinaryTreeNode<Vaccine> node ){
       node.height = Math.max (height (node.left), height (node.right)) + 1;
    }
    
-   public BinaryTreeNode<dataType> rotateRight ( BinaryTreeNode<dataType> p ){
-      BinaryTreeNode<dataType> q = p.left;
+   //Rotate Right Function
+   public BinaryTreeNode<Vaccine> rotateRight ( BinaryTreeNode<Vaccine> p ){
+      BinaryTreeNode<Vaccine> q = p.left;
       p.left = q.right;
       q.right = p;
       fixHeight (p);
@@ -27,8 +29,9 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       return q;
    }
 
-   public BinaryTreeNode<dataType> rotateLeft ( BinaryTreeNode<dataType> q ){
-      BinaryTreeNode<dataType> p = q.right;
+   //Rotate Left Function
+   public BinaryTreeNode<Vaccine> rotateLeft ( BinaryTreeNode<Vaccine> q ){
+      BinaryTreeNode<Vaccine> p = q.right;
       q.right = p.left;
       p.left = q;
       fixHeight (q);
@@ -36,7 +39,9 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       return p;
    }
    
-   public BinaryTreeNode<dataType> balance ( BinaryTreeNode<dataType> p ){
+   // Balance Function - that balances a binary tree to ensure it meets an AVL tree's requirements 
+   // makes use of the rotate functions above 
+   public BinaryTreeNode<Vaccine> balance ( BinaryTreeNode<Vaccine> p ){
       fixHeight (p);
       if (balanceFactor (p) == 2)
       {
@@ -53,12 +58,12 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       return p;
    }
 
-   public void insert ( dataType d ){
+   public void insert ( Vaccine d ){
       root = insert (d, root);
    }
-   public BinaryTreeNode<dataType> insert ( dataType d, BinaryTreeNode<dataType> node ){
+   public BinaryTreeNode<Vaccine> insert ( Vaccine d, BinaryTreeNode<Vaccine> node ){
       if (node == null)
-         return new BinaryTreeNode<dataType> (d, null, null);
+         return new BinaryTreeNode<Vaccine> (d, null, null);
       if (d.compareTo (node.data) <= 0)
          node.left = insert (d, node.left);
       else
@@ -66,21 +71,21 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       return balance (node);
    }
    
-   public void delete ( dataType d ){
+   public void delete ( Vaccine d ){
       root = delete (d, root);
    }   
-   public BinaryTreeNode<dataType> delete ( dataType d, BinaryTreeNode<dataType> node ){
+   public BinaryTreeNode<Vaccine> delete ( Vaccine d, BinaryTreeNode<Vaccine> node ){
       if (node == null) return null;
       if (d.compareTo (node.data) < 0)
          node.left = delete (d, node.left);
       else if (d.compareTo (node.data) > 0)
          node.right = delete (d, node.right);
       else{
-         BinaryTreeNode<dataType> q = node.left;
-         BinaryTreeNode<dataType> r = node.right;
+         BinaryTreeNode<Vaccine> q = node.left;
+         BinaryTreeNode<Vaccine> r = node.right;
          if (r == null)
             return q;
-         BinaryTreeNode<dataType> min = findMin (r);
+         BinaryTreeNode<Vaccine> min = findMin (r);
          min.right = removeMin (r);
          min.left = q;
          return balance (min);
@@ -88,28 +93,28 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       return balance (node);
    }
    
-   public BinaryTreeNode<dataType> findMin ( BinaryTreeNode<dataType> node ){
+   public BinaryTreeNode<Vaccine> findMin ( BinaryTreeNode<Vaccine> node ){
       if (node.left != null)
          return findMin (node.left);
       else
          return node;
    }
 
-   public BinaryTreeNode<dataType> removeMin ( BinaryTreeNode<dataType> node ){
+   public BinaryTreeNode<Vaccine> removeMin ( BinaryTreeNode<Vaccine> node ){
       if (node.left == null)
          return node.right;
       node.left = removeMin (node.left);
       return balance (node);
    }
 
-   public BinaryTreeNode<dataType> find ( dataType d ){
+   public BinaryTreeNode<Vaccine> find ( Vaccine d ){
       if (root == null)
          return null;
       else
          return find (d, root);
    }
 
-   public BinaryTreeNode<dataType> find ( dataType d, BinaryTreeNode<dataType> node ){
+   public BinaryTreeNode<Vaccine> find ( Vaccine d, BinaryTreeNode<Vaccine> node ){
       if (d.compareTo (node.data) == 0) 
          return node;
       else if (d.compareTo (node.data) < 0)
@@ -122,7 +127,7 @@ public class AVLTree<dataType extends Comparable<? super dataType>> extends Bina
       treeOrder (root, 0);
    }
 
-   public void treeOrder ( BinaryTreeNode<dataType> node, int level ){
+   public void treeOrder ( BinaryTreeNode<Vaccine> node, int level ){
       if (node != null)
       {
          for ( int i=0; i<level; i++ )
