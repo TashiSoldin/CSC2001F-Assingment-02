@@ -61,7 +61,7 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    }
 
    public void insert ( Vaccine d ){
-      insertOpCount = 0;
+      //insertOpCount = 0;
       root = insert (d, root);
    }
    public BinaryTreeNode<Vaccine> insert ( Vaccine d, BinaryTreeNode<Vaccine> node ){
@@ -76,7 +76,7 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
       return balance (node);
    }
    public int getInsertOpCount(){
-      return getInsertOpCount();
+      return this.insertOpCount;
    }
 
    public void delete ( Vaccine d ){
@@ -127,12 +127,20 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
       searchOpCount ++;
       if (d.compareTo (node.data) == 0) 
          return node;
-      else if (d.compareTo (node.data) < 0)
+      else if (d.compareTo (node.data) < 0){
+         searchOpCount++;
          return (node.left == null) ? null : find (d, node.left);
-      else
+      }
+      else{
+         searchOpCount++;
          return (node.right == null) ? null : find (d, node.right);
+      }
    }
    
+   public int getSearchOpCount(){
+      return this.searchOpCount;
+   }
+
    public void treeOrder (){
       treeOrder (root, 0);
    }

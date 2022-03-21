@@ -12,7 +12,6 @@ public class VaccineArrayApp {
     //Vaccine Array 
     private Vaccine[] vaccinations_array;
     private int vaccinations_count;
-    private int random_degree;
 
     //Set true to test using randomly generated data from python script
     //Set false to use standard code
@@ -88,7 +87,6 @@ public class VaccineArrayApp {
             Vaccine current_vaccine = new Vaccine(countries_to_search[i], date);
 
             for(int j=0; j<vaccinations_array.length; j++){
-                opCount++;
                 if (vaccinations_array[j].compareTo(current_vaccine)==0){
                     vaccinations = vaccinations_array[j].getVaccincations();
                     break;

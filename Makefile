@@ -11,16 +11,15 @@ DOCDIR=doc
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-classes= BinaryTreeNode.class BinaryTree.class \
-         BTQueueNode.class BTQueue.class \
-         AVLTree.class AVLTreeTest.class
+classes= Vaccine.class BinaryTreeNode.class BTQueueNode.class BTQueue.class BinaryTree.class \
+         AVLTree.class AVLTreeTest.class AVLExperiment.class
 
 class_files=$(classes:%.class=$(BINDIR)/%.class)
 
 default: $(class_files)
 
 run:
-	java -cp $(BINDIR) 
+	java -cp $(BINDIR) AVLExperiment 10
 
 docs:
 	javadoc -d $(DOCDIR) $(SRCDIR)/*.java

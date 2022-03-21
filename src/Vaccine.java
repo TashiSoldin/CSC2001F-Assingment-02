@@ -55,7 +55,7 @@ public class Vaccine implements Comparable<Vaccine>{
 
     //toString Method
     public String toString(){
-        String output = vaccinations;
+        String output = "Date: "+date+", Country: "+country+", Vaccinations: "+vaccinations;
         return output;
     }
 
