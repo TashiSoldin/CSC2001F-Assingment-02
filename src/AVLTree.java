@@ -4,14 +4,18 @@
 // reference: kukuruku.co/post/avl-trees/
 
 public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends BinaryTree<Vaccine>{
-   public int height ( BinaryTreeNode<Vaccine> node ){
+
+   public int searchOpCount = 0;
+   public int insertOpCount = 0;
+
+   public int height (BinaryTreeNode<Vaccine> node){
       if (node != null)
          return node.height;
       return -1;
    }
    
    // Caclulating the Balance Factor 
-   public int balanceFactor ( BinaryTreeNode<Vaccine> node ){
+   public int balanceFactor (BinaryTreeNode<Vaccine> node){
       return height (node.right) - height (node.left);
    }
    
@@ -43,14 +47,12 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    // makes use of the rotate functions above 
    public BinaryTreeNode<Vaccine> balance ( BinaryTreeNode<Vaccine> p ){
       fixHeight (p);
-      if (balanceFactor (p) == 2)
-      {
+      if (balanceFactor (p) == 2){
          if (balanceFactor (p.right) < 0)
             p.right = rotateRight (p.right);
          return rotateLeft (p);
       }
-      if (balanceFactor (p) == -2)
-      {
+      if (balanceFactor (p) == -2){
          if (balanceFactor (p.left) > 0)
             p.left = rotateLeft (p.left);
          return rotateRight (p);
@@ -59,18 +61,24 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    }
 
    public void insert ( Vaccine d ){
+      insertOpCount = 0;
       root = insert (d, root);
    }
    public BinaryTreeNode<Vaccine> insert ( Vaccine d, BinaryTreeNode<Vaccine> node ){
-      if (node == null)
-         return new BinaryTreeNode<Vaccine> (d, null, null);
+      if (node == null){
+         return new BinaryTreeNode<Vaccine> (d, null, null); 
+      }
+      insertOpCount ++;
       if (d.compareTo (node.data) <= 0)
          node.left = insert (d, node.left);
       else
          node.right = insert (d, node.right);
       return balance (node);
    }
-   
+   public int getInsertOpCount(){
+      return getInsertOpCount();
+   }
+
    public void delete ( Vaccine d ){
       root = delete (d, root);
    }   
@@ -108,6 +116,7 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    }
 
    public BinaryTreeNode<Vaccine> find ( Vaccine d ){
+      searchOpCount = 0;
       if (root == null)
          return null;
       else
@@ -115,6 +124,7 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    }
 
    public BinaryTreeNode<Vaccine> find ( Vaccine d, BinaryTreeNode<Vaccine> node ){
+      searchOpCount ++;
       if (d.compareTo (node.data) == 0) 
          return node;
       else if (d.compareTo (node.data) < 0)
@@ -128,8 +138,7 @@ public class AVLTree<Vaccine extends Comparable<? super Vaccine>> extends Binary
    }
 
    public void treeOrder ( BinaryTreeNode<Vaccine> node, int level ){
-      if (node != null)
-      {
+      if (node != null){
          for ( int i=0; i<level; i++ )
             System.out.print (" ");
          System.out.println (node.data);

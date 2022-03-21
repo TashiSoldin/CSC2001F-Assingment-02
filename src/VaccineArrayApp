@@ -1,0 +1,113 @@
+/*
+The VaccineArrayApp class reads in the text file, seperates each data line 
+into 3 seperate variables and stores it into an array.
+
+It then perfroms a search function and counts the number of operations used in this fucntion
+*/
+
+import java.util.*;
+import java.io.*;
+public class VaccineArrayApp {
+
+    //Vaccine Array 
+    private Vaccine[] vaccinations_array;
+    private int vaccinations_count;
+    private int random_degree;
+
+    //Set true to test using randomly generated data from python script
+    //Set false to use standard code
+    private Boolean TESTING = false;
+
+    public static void main(String[] args) {
+        new VaccineArrayApp();
+    }
+
+    public VaccineArrayApp(){
+        vaccinations_array = new Vaccine[9919];
+        vaccinations_count = 0;
+
+        try {
+            //Scanner Function 
+            Scanner sc = new Scanner(new File("data/vaccinations.csv"));
+
+            while (sc.hasNextLine()) {
+                String[] variables = sc.nextLine().split(",");
+                String country = variables[0];
+                String date = variables[1];
+                String vaccincations = "0";
+                if (variables.length == 3)
+                    vaccincations = variables[2];
+                vaccinations_array[vaccinations_count] = new Vaccine(country, date, vaccincations);
+                vaccinations_count++;
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        
+        // System.out.println(vaccinations_count);
+
+        String date;
+        String[] countries_to_search;
+        int country_counter;
+
+        if(TESTING == true){
+            date = "2022-01-01";
+            country_counter = 8;
+            countries_to_search = new String[]{"Cook Islands", "British Virgin Islands", "Djibouti", "Mozambique", "Kyrgyzstan", "United Kingdom", "Olympus", "Bikini Bottom"};
+        }
+        else{
+            //Get input date and countries        
+            Scanner in = new Scanner(System.in);
+
+            System.out.println("Enter the date:");
+            date = in.nextLine();
+
+            System.out.println("Enter the list of countries (end with an empty line):");
+            countries_to_search = new String[100];
+            country_counter = 0;
+
+            String next_value = in.nextLine();
+            do{
+                countries_to_search[country_counter] = next_value;
+                country_counter++;
+                next_value = in.nextLine();
+            } while(next_value.length()!=0);
+        }
+
+        searchArray(date, countries_to_search, country_counter);
+    }
+
+    //Array Search Function
+    public void searchArray(String date, String[] countries_to_search, int country_counter){
+        String out = "Results:\n";
+
+        for(int i=0; i<country_counter; i++){
+            String vaccinations = "<Not Found>";
+            
+            Vaccine current_vaccine = new Vaccine(countries_to_search[i], date);
+
+            for(int j=0; j<vaccinations_array.length; j++){
+                opCount++;
+                if (vaccinations_array[j].compareTo(current_vaccine)==0){
+                    vaccinations = vaccinations_array[j].getVaccincations();
+                    break;
+                }
+            }
+
+            if (i == country_counter - 1)
+                out += countries_to_search[i] + " = " + vaccinations;
+            else
+                out += countries_to_search[i] + " = " + vaccinations + "\n";
+        }
+
+        System.out.println(out);
+
+        if(TESTING == true){
+            System.out.println("Total array operations: " +  opCount);
+            System.out.println("Average array operations: " +  Math.round(opCount/country_counter)*100.0/100.0);
+        }
+
+    }
+ 
+}

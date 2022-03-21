@@ -2,31 +2,31 @@
 // 26 March 2017
 // Hussein Suleman
 
-public class BTQueue<dataType>{   
-   BTQueueNode<dataType> head;
-   BTQueueNode<dataType> tail;
+public class BTQueue<Vaccine>{   
+   BTQueueNode<Vaccine> head;
+   BTQueueNode<Vaccine> tail;
       
    public BTQueue (){
       head = null;
       tail = null;
    }
    
-   public BinaryTreeNode<dataType> getNext (){
+   public BinaryTreeNode<Vaccine> getNext (){
       if (head == null)
          return null;
-      BTQueueNode<dataType> qnode = head;
+      BTQueueNode<Vaccine> qnode = head;
       head = head.next;
       if ( head == null )
          tail = null;
       return qnode.node;
    }
    
-   public void enQueue ( BinaryTreeNode<dataType> node ){
+   public void enQueue ( BinaryTreeNode<Vaccine> node ){
       if (tail == null){   
-         tail = new BTQueueNode<dataType> (node, null);
+         tail = new BTQueueNode<Vaccine> (node, null);
          head = tail;
       }else{
-         tail.next = new BTQueueNode<dataType> (node, null);
+         tail.next = new BTQueueNode<Vaccine> (node, null);
          tail = tail.next;
       }   
    }   
